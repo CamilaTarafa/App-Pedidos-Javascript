@@ -1,67 +1,105 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Pedidos</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-        h1 {
-            color: #333;
-            font-size: 2rem;
-        }
-        #place-order-btn {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        #place-order-btn:hover {
-            background-color: #0056b3;
-        }
-        .order-status {
-            padding: 15px;
-            margin: 10px 0;
-            font-family: Arial, sans-serif;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .order-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .order-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        #order-status-container {
-            margin-top: 20px;
-            width: 100%;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Pedidos</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    h1 {
+      color: #333;
+      font-size: 2rem;
+    }
+    #place-order-btn {
+      background-color: #28a745; 
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem; 
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    #place-order-btn:hover {
+      background-color: #218838; 
+    }
+    .order-status {
+      padding: 15px;
+      margin: 10px 0;
+      font-family: Arial, sans-serif;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .order-success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .order-error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    #order-status-container {
+      margin-top: 20px;
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
-    <h1>Gestión de Pedidos</h1>
-    <button id="place-order-btn">Realizar Pedido</button>
-    <div id="order-status-container"></div>
-    
-    <script src="app.js"></script>
+  <h1>Gestión de Pedidos</h1>
+  <h2>Agregar Cliente</h2>
+  <form id="formulario">
+    <label>DNI:</label>
+    <input type="text" id="DNI"><br><br>
+    <label>Nombre:</label>
+    <input type="text" id="Nombre"><br><br>
+    <label>Preferencia:</label>
+    <input type="text" id="Preferencia"><br><br>
+    <label>Correo:</label>
+    <input type="email" id="Correo"><br><br>
+    <label>Telefono:</label>
+    <input type="tel" id="Telefono"><br><br>
+    <button id="boton">Agregar Cliente</button>
+  </form>
+  <button id="place-order-btn">Hacer Pedido</button> 
+  <div id="order-status-container"></div>
+  <script>
+    const formulario = document.getElementById('formulario');
+    const boton = document.getElementById('boton');
+
+    boton.addEventListener('click', (e) => {
+      e.preventDefault();
+      const datos = {
+        DNI: document.getElementById('DNI').value,
+        nombre: document.getElementById('Nombre').value,
+        preferencia: document.getElementById('Preferencia').value,
+        correo: document.getElementById('Correo').value,
+        telefono: document.getElementById('Telefono').value,
+      };
+
+      fetch('/api/agregar-cliente', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(datos).toString(),
+      })
+        .then((response) => response.text())
+        .then((data) => console.log(data))
+        .catch((error) => console.error(error));
+    });
+  </script>
 </body>
 </html>

@@ -42,20 +42,48 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cuando se haga clic en el botón, se llamará a la función handleOrderButtonClick
     document.getElementById('place-order-btn').addEventListener('click', handleOrderButtonClick);
 });
-const mysql = require ('mysql2/promise');
+
+
+
+//ConexionConMiBaseDeDatos
+const express = require('express');
+const mysql = require('mysql2/promise');
+const app = express();
+app.use(express.urlencoded({ extended: true }));
+
 const db = mysql.createPool({
-    host: 'localhost',
-    user: 'root@localhost', 
-    database: 'clientespedidosya'
-  });
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'clientespedidosya',
+});
+
+app.post('/api/agregar-cliente', async (req, res) => {
+  const { DNI, nombre, preferencia, correo, telefono } = req.body;
+  const query = 'INSERT INTO clientes (DNI, nombre, preferencia, correo, telefono) VALUES (?, ?, ?, ?, ?, ?)';
+  await db.execute(query, [DNI, nombre, preferencia, correo, telefono]);
+  res.send('Cliente agregado!');
+});
+
+app.listen(3000);
+
+//hIStorial
+app.get('/api/historial/:DNI', async (req, res) => {
+    const DNI = req.params.DNI;
+    const sql = 'SELECT * FROM pedidos WHERE cliente_DNI = ?';
+    const [result] = await db.query(sql, [DNI]);
+    res.json(result);
+});
+
+// Enviar notificación
+app.post('/api/notificar-cliente', (req, res) => {
+    const { DNI, mensaje } = req.body;
+    console.log(`Notificación para ${DNI}: ${mensaje}`);
+    res.send('Notificación enviada');
+});
+
+ 
+  app.listen(3000);
+
+
   
-  async function agregarCliente(DNI, nombre, preferencia, direccion, correo, telefono) {
-    try {
-      const query = 'INSERT INTO datos (DNI, nombre, preferencia, direccion, correo, telefono) VALUES (?, ?, ?, ?, ?, ?)';
-      const values = [DNI, nombre, preferencia, direccion, correo, telefono];
-      const resultado = await db.execute(query, values);
-      console.log('Cliente agregado ');
-    } catch (error) {
-      console.error('Error al agregar cliente:', error);
-    }
-  }
