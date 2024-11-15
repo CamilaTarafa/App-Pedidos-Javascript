@@ -6,11 +6,11 @@
 </head>
 <body style="display: flex; flex-direction: column; align-items: center; text-align: center;">
   
-  <!-- Título e imagen -->
+   
   <h1>Carga de Clientes</h1>
   <img src="C:\Users\Equipo\Downloads\PedidosGo__1_-removebg-preview.png"  alt="Pedidos Go" style="width: 200px; margin-bottom: 20px;">
 
-  <!-- Formulario para agregar cliente -->
+    
   <h2>Agregar Cliente</h2>
   <form id="cliente-form" style="display: flex; flex-direction: column; align-items: center;">
     <input type="text" id="dni" placeholder="DNI" required style="margin: 5px; padding: 8px;" />
@@ -22,7 +22,7 @@
     <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px; margin-top: 10px; border: none; cursor: pointer;">Agregar Cliente</button>
   </form>
 
-  <!-- Formulario para ver historial -->
+   
   <h2>Ver Historial</h2>
   <form id="historial-form" style="display: flex; flex-direction: column; align-items: center;">
     <input type="text" id="dni-historial" placeholder="DNI del Cliente" required style="margin: 5px; padding: 8px;" />
@@ -30,7 +30,7 @@
   </form>
   <div id="historial-container" style="margin-top: 20px;"></div>
 
-  <!-- Botón para enviar notificación -->
+  
   <h2>Enviar Notificación</h2>
   <button id="btnEnviar" style="background-color: #4CAF50; color: white; padding: 10px; margin-top: 10px; border: none; cursor: pointer;">Enviar Notificación al cliente</button>
 
@@ -41,7 +41,7 @@
       "Tu pedido está en proceso."
     ];
 
-    // Enviar notificación aleatoria
+   
     document.getElementById('btnEnviar').addEventListener('click', () => {
       const mensaje = notificaciones[Math.floor(Math.random() * notificaciones.length)];
       alert(`Notificación para el cliente: ${mensaje}`);
