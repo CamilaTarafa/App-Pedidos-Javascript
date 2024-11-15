@@ -14,18 +14,10 @@ const db = mysql.createPool({
   database: 'clientespedidosya'
 });
 
-// Prueba de conexión a la base de datos
-app.get('/api/test-db', async (req, res) => {
-  try {
-    const [rows] = await db.execute('SELECT 1');
-    res.send('Conexión exitosa a la base de datos');
-  } catch (error) {
-    console.error('Error de conexión a la base de datos:', error);
-    res.status(500).send('Error de conexión a la base de datos');
-  }
-});
+ 
+ 
 
-// Endpoint para agregar cliente
+ 
 app.post('/api/agregar-cliente', async (req, res) => {
   const { dni, nombre, preferencia, direccion, correo, telefono } = req.body;
   try {
@@ -39,7 +31,4 @@ app.post('/api/agregar-cliente', async (req, res) => {
   }
 });
 
-app.listen(3003, () => {
-  console.log('Servidor corriendo en http://localhost:3003');
-});
- 
+app.listen(3003);
